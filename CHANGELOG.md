@@ -1,6 +1,125 @@
 MONARC Changelog
 ================
 
+
+## 2.13.3-p6 (2025-12-18)
+
+### Fix
+
+- [FrontOffice] Fixed the issue of the analysis creation based on a model with context fields.
+
+
+## 2.13.3-p5 (2025-11-24)
+
+### Fix
+
+- [[FrontOffice] Fix import of global assets](https://github.com/monarc-project/MonarcAppFO/issues/575).
+
+
+## 2.13.3-p4 (2025-07-31)
+
+### Fix
+
+- [Newly created statements of applicability not displayed](https://github.com/monarc-project/MonarcAppFO/issues/565).
+
+
+## 2.13.3-p3 (2025-07-03)
+
+### Fix
+
+- Import Asset Library objects from MOSP when selected category is root.
+- Snapshots creation when Record of Processing Activities are fully defined.
+
+
+## 2.13.3-p2 (2025-06-18)
+
+### Fix
+
+- [#362](https://github.com/monarc-project/MonarcAppFO/issues/562) Fixed the final report generation error when the asset's context is set.
+- Fixed the scale impact type status validation during the import process. 
+  If an instance consequence is not hidden, but a corresponding scale impact type is hidden the consequence value is not used for the risk calculation.
+
+
+## 2.13.3-p1 (2025-05-20)
+
+### Fixes
+
+- Added the validation of the instances hierarchy to prevent a possible parent / child circular reference.
+- Fixed batch import validation error for measures, operational risks and operational risks tags.
+
+
+## 2.13.3 (2025-04-17)
+
+### Enhancement
+
+- Possibility to rest 2FA of users by the admin account along with the password reset.
+- The Global analyses stats is only available now to the users with CEO (global statistics) role.
+- Possibility to import on the BackOffice side risks with mode (generic | specific) property.
+
+### Fixes
+
+- Fixed analysis creation based on a specific model when the model has assets that consist of risks with generic threats or vulnerabilities.
+- Fixed updating of the assets' metadata.
+
+
+## 2.13.2 (2025-02-07)
+
+### Enhancement
+
+- An optional Captcha integration, that can appear after certain number, configured, of unsuccessful login attempts.
+  To enable Captcha a specific configuration has to be added (@see config/autoload/local.php.dist, 'captcha' option).
+- Configurable export of analyses with evaluations. By default, the option can be yes, so export with evaluations is not forgotten to be enabled.
+  To enable it a specific configuration has to be added (@see config/autoload/local.php.dist, 'export' option).
+- Added the risks IDs to all the tables to facilitate the traceability. Based on [the discussion](https://github.com/monarc-project/MonarcAppFO/discussions/419).
+
+### Fixes
+
+- [#552](https://github.com/monarc-project/MonarcAppFO/issues/552), Fix of Assets Library objects import.
+
+
+## 2.13.1 (2024-10-15)
+
+### Enhancement
+
+- Refactored backend code. It includes the following changes points: 
+  - Removed the relying on the abstraction and sharing the same methods execution of services.
+  - Implemented the single responsibility approach to the entities.I
+  - Added the filtering functionality to process the incoming get requests data and prepare them for the filter and sort queries.
+  - Added the data validation at first place. Before the post, put, patch and delete requests data are passed to the services, they are validated.
+  - Removed the dependency on the abstract table common methods, where the entities positions were processed, and some specific code run.
+  - Implemented the common approach, not resources/time consuming, of the entities positioning based on interfaces and traits.
+  - Optimised the export and import functionality to be clean and fast.
+  - Added a common place to validate the analysis access and endpoints permissions before the controllers’ actions are reached. The Middleware passed an anr object to the actions automatically as an attribute.
+  - Restructured the components and code parts of the application based on responsibilities, relations and to be more clear.
+  - Removed many deprecated code parts and cleaned up the deprecated columns in the DB tables.
+  - Improved some DB indexes and renamed tables, columns to be more clear on the names.
+  - Added some first unit tests as a starting point for the full coverage.
+  - **Not refactored parts are the following**: `Questions`, `QuestionsChoices`, `Guide`, `Interviews`, `ROPA`, `Deliverable`.
+
+### User stories
+- Added possibility to export risk analysis with Knowledge Base (KB) and/or Assets Library (AL). That allows to optionally export all the KB a AL data without having the analysis modelling started. This is needed for sharing models between FrontOffices or update AL or KB with new versions of the structures.
+- Changed the export format of JSON export file to reduce its size and be similar to the api endpoints responses and the projects structures views. An old data converter is implemented for the backward compatibility.
+- Significantly improved the import time and made it always consistent. In case of import issues the data are not inserted, there are saved in the DB only at the end of the process (transactional approach).
+- Removed extra user’s information from password reset response and removed the endpoint access by the other users (points 5.1.1, 5.1.2).
+- Restricted analysis creation based on the models that are not available for the client by manually faking the request (point 5.2.3).
+- [Fixed the password change](https://github.com/monarc-project/MonarcAppFO/discussions/523).
+
+
+## 2.12.7 (2023-10-25)
+
+### Enhancement
+
+- [Alternative to 2FA QR code](https://github.com/monarc-project/MonarcAppFO/issues/505)
+- [Add context info to the list of analysis panel](https://github.com/monarc-project/MonarcAppFO/issues/506)
+
+### Fix
+
+- [Global dashboard max calculation error](https://github.com/monarc-project/MonarcAppFO/issues/507)
+- [[FrontOffice] Fixed the operational risks import from CSV](https://github.com/monarc-project/MonarcAppFO/issues/484) - __Since patch1__
+- [Fixed removal of specific instance risks](https://github.com/monarc-project/MonarcAppFO/issues/520) - __Since patch2__
+- [Fixed the library objects disappearing after the specific risks removal](https://github.com/monarc-project/MonarcAppFO/discussions/516) - __Since patch2__
+
+
 ## 2.12.6 (2023-03-24)
 
 ### Enhancement
